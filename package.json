@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "bin": {},
+  "bin": {
+    "gendiff": "src/bin/gendiff.js"
+  },
   "license": "ISC",
   "dependencies": {
     "commander": "^10.0.1",
