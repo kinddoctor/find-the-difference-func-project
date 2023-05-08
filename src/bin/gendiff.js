@@ -16,8 +16,8 @@ program
   .helpOption('-h, --help', 'output usage information')
   .option('-f, --format <type>', 'output format')
   .action((filepath1, filepath2) => {
-    const absoluteFilePath1 = path.resolve('__fixtures__', filepath1);
-    const absoluteFilePath2 = path.resolve('__fixtures__', filepath2);
+    const absoluteFilePath1 = path.resolve(filepath1);
+    const absoluteFilePath2 = path.resolve(filepath2);
     const file1 = JSON.parse(readFileSync(absoluteFilePath1));
     const file2 = JSON.parse(readFileSync(absoluteFilePath2));
     const unionKeys = union(Object.keys(file1), Object.keys(file2));
