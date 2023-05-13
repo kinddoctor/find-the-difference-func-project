@@ -15,7 +15,7 @@ const genDiff = (fileName1, fileName2) => {
   const differenceInFiles = sortedUnionKeys.reduce((acc, key) => {
     const deletedLine = `  - ${key}: ${file1[key]}`;
     const addedLine = `  + ${key}: ${file2[key]}`;
-    const unchangedLine = `   ${key}: ${file1[key]}`;
+    const unchangedLine = `    ${key}: ${file1[key]}`;
     if (!Object.hasOwn(file1, key)) {
       const newAcc = `${acc}\n${addedLine}`;
       return newAcc;
