@@ -12,5 +12,4 @@ jobs:
     - uses: actions/setup-node@v3
     - run: npm install
     - run: make lint
-    - name: Run Jest
-      uses: stefanoeb/jest-action@1.0.3
+    - run: make jest
