@@ -3,6 +3,8 @@ import union from 'lodash/union.js';
 import path from 'node:path';
 
 const readTheFile = (filename) => {
+
+  
   const absoluteFilePath = path.resolve(filename);
   return JSON.parse(readFileSync(absoluteFilePath));
 };
