@@ -1,8 +1,11 @@
 import parseFile from '../src/parsers.js';
 
+let fileJSON;
+let fileYAML;
+
 beforeEach(() => {
   fileJSON = parseFile('../__fixtures__/file1.json');
-  fileYAML = parseFile('../__fixtures__/file1.yaml');
+  fileYAML = parseFile('../__fixtures__/file1.yml');
 });
 
 test('parseFileIntoJSValue', () => {
