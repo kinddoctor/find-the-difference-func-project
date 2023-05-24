@@ -4,8 +4,8 @@ let fileJSON;
 let fileYAML;
 
 beforeEach(() => {
-  fileJSON = parseFile('../__fixtures__/file1.json');
-  fileYAML = parseFile('../__fixtures__/file1.yml');
+  fileJSON = parseFile('/home/kinddoctor/frontend-project-46/__fixtures__/file1.json');
+  fileYAML = parseFile('/home/kinddoctor/frontend-project-46/__fixtures__/file1.yml');
 });
 
 test('parseFileIntoJSValue', () => {
