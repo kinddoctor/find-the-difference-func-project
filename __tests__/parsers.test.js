@@ -3,11 +3,11 @@ import { fileURLToPath } from 'url';
 import path from 'node:path';
 import parseFile from '../src/parsers.js';
 
-let fileJSON;
-let fileYAML;
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+let fileJSON;
+let fileYAML;
 
 beforeEach(() => {
   fileJSON = parseFile(path.join(__dirname, '../__fixtures__/file1.json'));
