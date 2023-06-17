@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import gendiff from '../bin/gendiff.js';
+import makeTree from '../src/makeTree.js';
+import makeStylish from '../src/stylish-formater.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +19,6 @@ beforeEach(() => {
   filepath2 = getFixturePath('file2.yml');
 });
 
-test('genDiff', () => {
-  expect(gendiff(filepath1, filepath2)).toEqual(expectedResult);
+test('makeTree', () => {
+  expect(makeStylish(makeTree(filepath1, filepath2))).toEqual(expectedResult);
 });

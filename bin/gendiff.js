@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import genDiff from '../src/gendiff.js';
+import makeTree from '../src/makeTree.js';
+import makeStylish from '../src/stylish-formater.js';
 
 const program = new Command();
 
@@ -12,10 +13,13 @@ program
   .argument('<filepath2>')
   .version('1.0.0', '-V, --version', 'output the version number')
   .helpOption('-h, --help', 'output usage information')
-  .option('-f, --format <type>', 'output format')
+  .option('-f, --format <type>', 'output format', 'stylish')
   .action((fileName, fileName2) => {
-    const result = genDiff(fileName, fileName2);
-    console.log(`${result}`);
+    const result = makeTree(fileName, fileName2);
+    const options = program.opts();
+    if (options.format === 'stylish') {
+      console.log(`${makeStylish(result)}`);
+    }
   });
 
 program.parse();
