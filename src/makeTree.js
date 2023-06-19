@@ -1,9 +1,6 @@
 import union from 'lodash/union.js';
-import parseFile from './parsers.js';
 
-const makeTree = (filepath1, filepath2) => {
-  const file1 = parseFile(filepath1);
-  const file2 = parseFile(filepath2);
+const makeTree = (file1, file2) => {
   const unionKeys = union(Object.keys(file1), Object.keys(file2));
   const findDiff = (obj1, obj2, keys) => {
     const result = keys.reduce((acc, key) => {

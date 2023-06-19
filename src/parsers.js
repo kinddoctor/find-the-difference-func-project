@@ -1,16 +1,6 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
 import yaml from 'js-yaml';
 
-const readFile = (filename) => {
-  const absoluteFilePath = path.resolve(filename);
-  const data = readFileSync(absoluteFilePath);
-  const extension = path.extname(absoluteFilePath);
-  return { data, extension };
-};
-
-const parseFile = (filename) => {
-  const file = readFile(filename);
+const parseFile = (file) => {
   if (file.extension === ('.yml' || '.yaml')) {
     return yaml.load(file.data);
   }

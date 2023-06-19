@@ -1,9 +1,6 @@
 import union from 'lodash/union.js';
-import parseFile from './parsers.js';
 
-const genDiff = (fileName1, fileName2) => {
-  const file1 = parseFile(fileName1);
-  const file2 = parseFile(fileName2);
+const genDiff = (file1, file2) => {
   const unionKeys = union(Object.keys(file1), Object.keys(file2));
   const sortedUnionKeys = unionKeys.sort();
   const differenceInFiles = sortedUnionKeys.reduce((acc, key) => {
