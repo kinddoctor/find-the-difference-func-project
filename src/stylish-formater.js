@@ -1,8 +1,8 @@
 const makeStylish = (diffTree, spaceCount = 4) => {
   const iter = (tree, depth) => {
     const keys = Object.keys(tree);
-    const indent = depth * spaceCount - 2;
-    const bracketIndent = depth * spaceCount - spaceCount;
+    const indent = ' '.repeat(depth * spaceCount - 2);
+    const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
     const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
     const lines = keys.map((key) => {
       const value = (typeof tree[key] !== 'object' || tree[key] === null) ? tree[key].value : iter(tree[key], depth + 1);
