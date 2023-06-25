@@ -1,12 +1,12 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import makeTree from '../src/makeTree.js';
-import makeStylish from '../src/stylish-formater.js';
+import path from 'node:path';
+import { readFileSync } from 'node:fs';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 let expectedResult;
@@ -19,6 +19,4 @@ beforeEach(() => {
   filepath2 = getFixturePath('file2.yml');
 });
 
-test('makeTree', () => {
-  expect(makeStylish(makeTree(filepath1, filepath2))).toEqual(expectedResult);
-});
+test('genDiff', () => expect(genDiff(filepath1, filepath2))).toEqual(expectedResult);

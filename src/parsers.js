@@ -1,11 +1,11 @@
 import yaml from 'js-yaml';
 
-const parseFile = (file) => {
-  if (file.extension === ('.yml' || '.yaml')) {
-    return yaml.load(file.data);
+const parseFile = (content, extension) => {
+  if (extension === ('.yml' || '.yaml')) {
+    return yaml.load(content);
   }
-  if (file.extension === '.json') {
-    return JSON.parse(file.data);
+  if (extension === '.json') {
+    return JSON.parse(content);
   }
   return console.log('Error! Unknown file extension!');
 };

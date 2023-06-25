@@ -3,24 +3,26 @@ import path from 'node:path';
 import parseFile from './parsers.js';
 import makeTree from './makeTree.js';
 import makeStylish from './stylish-formater.js';
-import makePlainDiff from './gendiffOldPlainVersion.js';
 
-const readFile = (filename) => {
-  const absoluteFilePath = path.resolve(filename);
-  const data = readFileSync(absoluteFilePath);
-  const extension = path.extname(absoluteFilePath);
-  return { data, extension };
+const getAbsolutePath = (file) => path.resolve(file);
+const getExtension = (file) => path.extname(file);
+
+const getDataFromFile = (file) => {
+  const content = readFileSync(getAbsolutePath(file));
+  const extension = getExtension(file);
+  return parseFile(content, extension);
 };
 
-const genDiff = (fileName1, fileName2, format) => {
-  const file1 = parseFile(readFile(fileName1));
-  const file2 = parseFile(readFile(fileName2));
-  const tree = makeTree(file1, file2);
+const genDiff = (file1, file2, format) => {
+  const data1 = getDataFromFile(file1);
+  const data2 = getDataFromFile(file2);
+  const tree = makeTree(data1, data2);
+  console.log(tree);
   switch (format) {
     case 'stylish':
       return makeStylish(tree);
     default:
-      return makePlainDiff(tree);
+      return console.log('Type of format was not mentioned');
   }
 };
 
