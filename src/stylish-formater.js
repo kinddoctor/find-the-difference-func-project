@@ -5,28 +5,28 @@ const makeStylish = (diffTree, spaceCount = 4) => {
     const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
     const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
     const lines = keys.map((key) => {
-      const value = (typeof tree[key] !== 'object' || tree[key] === null) ? tree[key].value : iter(tree[key], depth + 1);
-      switch (tree[key].status) {
-        case 'added': {
-          return `${indent}${specialSigns.added}${key}: ${value}`;
-        }
-        case 'deleted': {
-          return `${indent}${specialSigns.deleted}${key}: ${value}`;
-        }
-        case 'changed': {
-          if (typeof tree[key] !== 'object' || tree[key] === null) {
-            return `${indent}${specialSigns.deleted}${key}: ${tree[key].value1}\n
-            ${indent}${specialSigns.added}${key}: ${tree[key].value2}`;
+      if (key.status !== 'changed' && (typeof key.value !== 'object' || key.value === null)) {
+        switch (key.status) {
+          case 'added': {
+            return `${indent}${specialSigns.added}${key}: ${key.value}`;
           }
-          return `${indent}${specialSigns.unchanged}${key}: ${value}`;
-        }
-        case 'unchanged': {
-          return `${indent}${specialSigns.unchanged}${key}: ${tree[key].value}`;
-        }
-        default: {
-          return `${indent}${specialSigns.unchanged}${key}: ${tree[key].value}`;
+          case 'deleted': {
+            return `${indent}${specialSigns.deleted}${key}: ${key.value}`;
+          }
+          case 'unchanged': {
+            return `${indent}${specialSigns.unchanged}${key}: ${key.value}`;
+          }
+          default: {
+            //if !key.status
+            return `${indent}${specialSigns.unchanged}${key}: ${key.value}`;
+          }
         }
       }
+      if (key.value.first) {
+        return `${indent}${specialSigns.deleted}${key}: ${key.value.first}\n
+        ${indent}${specialSigns.added}${key}: ${key.value.second}`;
+      }
+      return `${indent}${specialSigns.unchanged}${key}: ${iter(key.value, depth + 1)}`;
     });
     return ['{',
       ...lines,

@@ -17,20 +17,18 @@ const makeTree = (file1, file2) => {
         return acc;
       }
       if (obj1[key] === 'null' || obj2[key] === 'null') {
-        acc[key] = { status: 'changed', value1: obj1[key], value2: obj2[key] };
+        acc[key] = { status: 'changed', value: { first: obj1[key], second: obj2[key] } };
         return acc;
       }
       if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
         const newObj1 = obj1[key];
         const newObj2 = obj2[key];
-        console.log(`1111${JSON.stringify(newObj1)}222222${JSON.stringify(newObj2)}`);
         const keysOfNewObjs = union(Object.keys(newObj1), Object.keys(newObj2));
-        console.log(`!!!!!!!!!!${keysOfNewObjs}`);
         const value = findDiff(newObj1, newObj2, keysOfNewObjs);
         acc[key] = { status: 'changed', value };
         return acc;
       }
-      acc[key] = { status: 'changed', value1: obj1[key], value2: obj2[key] };
+      acc[key] = { status: 'changed', value: { first: obj1[key], second: obj2[key] } };
       return acc;
     }, {});
     return result;
