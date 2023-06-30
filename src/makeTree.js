@@ -25,7 +25,7 @@ const makeTree = (file1, file2) => {
         const newObj2 = obj2[key];
         const keysOfNewObjs = union(Object.keys(newObj1), Object.keys(newObj2));
         const value = findDiff(newObj1, newObj2, keysOfNewObjs);
-        acc[key] = { status: 'changed', value };
+        acc[key] = { status: 'nested', value };
         return acc;
       }
       acc[key] = { status: 'changed', value: { first: obj1[key], second: obj2[key] } };

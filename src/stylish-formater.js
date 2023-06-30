@@ -5,28 +5,27 @@ const makeStylish = (diffTree, spaceCount = 4) => {
     const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
     const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
     const lines = keys.map((key) => {
-      if (key.status !== 'changed' && (typeof key.value !== 'object' || key.value === null)) {
-        switch (key.status) {
-          case 'added': {
-            return `${indent}${specialSigns.added}${key}: ${key.value}`;
-          }
-          case 'deleted': {
-            return `${indent}${specialSigns.deleted}${key}: ${key.value}`;
-          }
-          case 'unchanged': {
-            return `${indent}${specialSigns.unchanged}${key}: ${key.value}`;
-          }
-          default: {
-            //if !key.status
-            return `${indent}${specialSigns.unchanged}${key}: ${key.value}`;
-          }
+      switch (key.status) {
+        case 'added': {
+          return `${indent}${specialSigns.added}${key}: ${key.value}`;
+        }
+        case 'deleted': {
+          return `${indent}${specialSigns.deleted}${key}: ${key.value}`;
+        }
+        case 'changed': {
+          return `${indent}${specialSigns.deleted}${key}: ${key.value.first}\n
+          ${indent}${specialSigns.added}${key}: ${key.value.second}`;
+        }
+        case 'unchanged': {
+          return `${indent}${specialSigns.unchanged}${key}: ${key.value}`;
+        }
+        case 'nested': {
+          return `${indent}${specialSigns.unchanged}${key}: ${iter(key.value, depth + 1)}`;
+        }
+        default: {
+          throw new Error(`Unknown status: ${key.status} in key ${key}`);
         }
       }
-      if (key.value.first) {
-        return `${indent}${specialSigns.deleted}${key}: ${key.value.first}\n
-        ${indent}${specialSigns.added}${key}: ${key.value.second}`;
-      }
-      return `${indent}${specialSigns.unchanged}${key}: ${iter(key.value, depth + 1)}`;
     });
     return ['{',
       ...lines,
