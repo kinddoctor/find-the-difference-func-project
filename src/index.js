@@ -22,7 +22,7 @@ const genDiff = (file1, file2, format) => {
     case 'stylish':
       return makeStylish(tree);
     default:
-      return console.log('Type of format was not mentioned');
+      return console.log('Unknown type of format!');
   }
 };
 

@@ -17,7 +17,7 @@ const makeTree = (file1, file2) => {
         return acc;
       }
       if (obj1[key] === 'null' || obj2[key] === 'null') {
-        acc[key] = { status: 'changed', value: { first: obj1[key], second: obj2[key] } };
+        acc[key] = { status: 'changed', oldValue: obj1[key], newValue: obj2[key] };
         return acc;
       }
       if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
@@ -28,7 +28,7 @@ const makeTree = (file1, file2) => {
         acc[key] = { status: 'nested', value };
         return acc;
       }
-      acc[key] = { status: 'changed', value: { first: obj1[key], second: obj2[key] } };
+      acc[key] = { status: 'changed', oldValue: obj1[key], newValue: obj2[key] };
       return acc;
     }, {});
     return result;
