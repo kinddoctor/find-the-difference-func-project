@@ -19,4 +19,4 @@ beforeEach(() => {
   filepath2 = getFixturePath('file2.yml');
 });
 
-test('genDiff', () => expect(genDiff(filepath1, filepath2))).toEqual(expectedResult);
+test('genDiff', () => expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(expectedResult));
