@@ -9,3 +9,7 @@ Example of comparing JSON files
 
 Example of comparing YAML files
 [![asciicast](https://asciinema.org/a/R8C11HskVnrPN67kFoOumnHBe)](https://asciinema.org/a/R8C11HskVnrPN67kFoOumnHBe)
+
+
+Example of comparing nested files:
+[![asciicast](https://asciinema.org/a/Ee4dmJenGJlaYJt4nWItfaP1f)](https://asciinema.org/a/Ee4dmJenGJlaYJt4nWItfaP1f)
