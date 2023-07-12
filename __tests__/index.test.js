@@ -14,7 +14,7 @@ let filepath1;
 let filepath2;
 
 beforeEach(() => {
-  expectedResult = readFileSync(getFixturePath('expectedNestedDiff.txt'), 'utf-8');
+  expectedResult = readFileSync(getFixturePath('expectedStylish.txt'), 'utf-8');
   filepath1 = getFixturePath('file1.yml');
   filepath2 = getFixturePath('file2.yml');
 });
