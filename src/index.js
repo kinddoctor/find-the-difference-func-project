@@ -7,7 +7,7 @@ import makeStylish from './stylish-formater.js';
 const getAbsolutePath = (file) => path.resolve(file);
 const getExtension = (file) => path.extname(file);
 
-const getDataFromFile = (file) => {
+export const getDataFromFile = (file) => {
   const content = readFileSync(getAbsolutePath(file));
   const extension = getExtension(file);
   return parseFile(content, extension);
