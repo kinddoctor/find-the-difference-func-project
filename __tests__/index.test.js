@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import parseFile from '../src/parsers.js';
 import makeTree from '../src/makeTree.js';
 import genDiff from '../src/index.js';
+import diff from '../__fixtures__/expectedDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,7 +13,7 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const getContent = (file) => readFileSync(getFixturePath(file), 'utf-8');
 
-let expectedDiff;
+const expectedDiff = diff;
 let expectedStylish;
 let expectedPlain;
 let file1;
@@ -23,7 +24,6 @@ let filepathJSON1;
 let filepathJSON2;
 
 beforeEach(() => {
-  expectedDiff = getContent('expectedDiff.txt');
   expectedPlain = getContent('expectedPlain.txt');
   expectedStylish = getContent('expectedStylish.txt');
   file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
@@ -34,7 +34,7 @@ beforeEach(() => {
   filepathJSON2 = getFixturePath('file2.json');
 });
 
-test('diff', () => expect(makeTree(file1, file2)).toStrictEqual(expectedDiff));
+test('diff', () => expect(makeTree(file1, file2)).toEqual(expectedDiff));
 
 test('stylishDiff', () => expect(genDiff(filepathYML1, filepathYML2, 'stylish')).toEqual(expectedStylish));
 
