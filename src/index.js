@@ -18,6 +18,7 @@ const genDiff = (file1, file2, format) => {
   const data1 = getDataFromFile(file1);
   const data2 = getDataFromFile(file2);
   const tree = makeTree(data1, data2);
+  console.log(`!1!1!1!${JSON.stringify(tree)}`);
   switch (format) {
     case 'stylish':
       return makeStylish(tree);
