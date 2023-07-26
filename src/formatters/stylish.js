@@ -1,32 +1,43 @@
+import isPlainObject from 'lodash/isPlainObject.js';
+
 const makeStylish = (diffTree, spaceCount = 4) => {
-  const iter = (tree, depth) => {
-    const keys = Object.keys(tree).sort();
+  const iter = (children, depth) => {
     const indent = ' '.repeat(depth * spaceCount - 2);
     const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
     const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
-    const lines = keys.map((key) => {
-      const getValue = (value) => {
-        const finalValue = (typeof value !== 'object' || value === null) ? value : iter(value, depth + 1);
-        return finalValue;
-      };
-      switch (tree[key].status) {
+
+    const getValue = (curValue) => {
+      if (!isPlainObject(curValue)) {
+        return curValue;
+      }
+      const keys = Object.keys(curValue)
+        .map((key) => {
+          const value = curValue[key];
+          return { key, value };
+        });
+      return iter(keys, depth + 1);
+    };
+
+    const lines = children.map((child) => {
+      const { key, status } = child;
+      switch (status) {
         case 'added': {
-          return `${indent}${specialSigns.added}${key}: ${getValue(tree[key].value)}`;
+          return `${indent}${specialSigns.added}${key}: ${getValue(child.value)}`;
         }
         case 'deleted': {
-          return `${indent}${specialSigns.deleted}${key}: ${getValue(tree[key].value)}`;
-        }
-        case 'changed': {
-          return `${indent}${specialSigns.deleted}${key}: ${getValue(tree[key].oldValue)}\n${indent}${specialSigns.added}${key}: ${getValue(tree[key].newValue)}`;
+          return `${indent}${specialSigns.deleted}${key}: ${getValue(child.value)}`;
         }
         case 'unchanged': {
-          return `${indent}${specialSigns.unchanged}${key}: ${getValue(tree[key].value)}`;
+          return `${indent}${specialSigns.unchanged}${key}: ${getValue(child.value)}`;
+        }
+        case 'changed': {
+          return `${indent}${specialSigns.deleted}${key}: ${getValue(child.oldValue)}\n${indent}${specialSigns.added}${key}: ${getValue(child.newValue)}`;
         }
         case 'nested': {
-          return `${indent}${specialSigns.unchanged}${key}: ${getValue(tree[key].value)}`;
+          return `${indent}${specialSigns.unchanged}${key}: ${iter(child.children, depth + 1)}`;
         }
         default: {
-          return `${indent}${specialSigns.unchanged}${key}: ${getValue(tree[key])}`;
+          return `${indent}${specialSigns.unchanged}${key}: ${getValue(child.value)}`;
         }
       }
     });
@@ -34,7 +45,8 @@ const makeStylish = (diffTree, spaceCount = 4) => {
       ...lines,
       `${bracketIndent}}`].join('\n');
   };
-  return iter(diffTree, 1);
+  const { children } = diffTree;
+  return iter(children, 1);
 };
 
 export default makeStylish;
