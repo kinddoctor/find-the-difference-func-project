@@ -2,7 +2,7 @@ const result = {
   key: 'root',
   status: 'nested',
   children: [
-    { 
+    {
       key: 'common',
       status: 'nested',
       children: [
@@ -47,13 +47,13 @@ const result = {
               key: 'doge',
               status: 'nested',
               children: [
-                { 
+                {
                   key: 'wow',
                   newValue: 'so much',
                   oldValue: '',
                   status: 'changed',
                 },
-              ]
+              ],
             },
             {
               key: 'key',
@@ -64,10 +64,10 @@ const result = {
               key: 'ops',
               status: 'added',
               value: 'vops',
-            }
-          ]
+            },
+          ],
         },
-      ]
+      ],
     },
     {
       key: 'group1',
@@ -92,7 +92,7 @@ const result = {
           },
           status: 'changed',
         },
-      ]
+      ],
     },
     {
       key: 'group2',
