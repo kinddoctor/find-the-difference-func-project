@@ -1,47 +1,48 @@
 import flattenDeep from 'lodash/flattenDeep.js';
+import isPlainObject from 'lodash/isPlainObject.js';
 
-const getValue = (value) => ((typeof value !== 'object' || value === null) ? value : '[complex value]');
-
-const getLine = (obj, key, objpath) => {
-  const keypath = `${objpath}${key}`;
-  switch (obj[key].status) {
-    case 'added': {
-      const value = getValue(obj[key].value);
-      return `Property ${keypath} was added with value: ${value}`;
-    }
-    case 'deleted': {
-      return `Property ${keypath} was deleted`;
-    }
-    case 'changed': {
-      const oldValue = getValue(obj[key].oldValue);
-      const newValue = getValue(obj[key].newValue);
-      return `Property ${keypath} was updated. From ${oldValue} to ${newValue}`;
-    }
-    default:
-      throw new Error(`Unknown status: ${obj[key].status} in ${obj[key]}!`);
+const getValue = (value) => {
+  if (isPlainObject(value)) {
+    return '[complex value]';
   }
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  return value;
 };
 
 const makePlain = (diffTree) => {
-  const currentObj = diffTree;
-  const currentKeys = Object.keys(diffTree).sort();
-  const currentObjpath = '';
-  const inner = (obj, keys, objpath) => {
-    console.log(`1111!!!!${keys}`);
-    const result = keys.map((key) => {
-      console.log(`!!!!!!!!!!!${key}`);
-      console.log(`2222222${obj[key].status}`);
-      if (obj[key].status !== 'nested') {
-        return getLine(obj, key, objpath);
-      }
-      const newObj = obj[key];
-      const newKeys = Object.keys(obj[key].value).sort();
-      const newObjpath = `${objpath}.${key}`;
-      return inner(newObj, newKeys, newObjpath);
-    });
+  const inner = (children, path) => {
+    const result = children.filter(({ status }) => status !== 'unchanged')
+      .map((child) => {
+        const { key, status } = child;
+        const keypath = (path === '') ? `${key}` : `${path}.${key}`;
+        switch (status) {
+          case 'added': {
+            const value = getValue(child.value);
+            return `Property '${keypath}' was added with value: ${value}`;
+          }
+          case 'deleted': {
+            return `Property '${keypath}' was removed`;
+          }
+          case 'changed': {
+            const oldValue = getValue(child.oldValue);
+            const newValue = getValue(child.newValue);
+            return `Property '${keypath}' was updated. From ${oldValue} to ${newValue}`;
+          }
+          case 'nested': {
+            const newChildren = child.children;
+            const newPath = keypath;
+            return inner(newChildren, newPath);
+          }
+          default:
+            throw new Error(`Unknown status: ${status} in ${key}!`);
+        }
+      });
     return flattenDeep(result).join('\n');
   };
-  return inner(currentObj, currentKeys, currentObjpath);
+  const { children } = diffTree;
+  return inner(children, '');
 };
 
 export default makePlain;
