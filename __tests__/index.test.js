@@ -16,6 +16,7 @@ const getContent = (file) => readFileSync(getFixturePath(file), 'utf-8');
 const expectedDiff = diff;
 let expectedStylish;
 let expectedPlain;
+let expectedJson;
 let file1;
 let file2;
 let filepathYML1;
@@ -26,6 +27,7 @@ let filepathJSON2;
 beforeEach(() => {
   expectedPlain = getContent('expectedPlain.txt');
   expectedStylish = getContent('expectedStylish.txt');
+  expectedJson = getContent('expectedJson.json');
   file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
   file2 = parseFile(getContent('file2.yml'), path.extname('file2.yml'));
   filepathYML1 = getFixturePath('file1.yml');
@@ -39,3 +41,5 @@ test('diff', () => expect(makeTree(file1, file2)).toEqual(expectedDiff));
 test('stylishDiff', () => expect(genDiff(filepathYML1, filepathYML2, 'stylish')).toEqual(expectedStylish));
 
 test('plainDiff', () => expect(genDiff(filepathJSON1, filepathJSON2, 'plain')).toEqual(expectedPlain));
+
+test('jsonDiff', () => expect(genDiff(filepathJSON1, filepathJSON2, 'json')).toEqual(expectedJson));
