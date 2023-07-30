@@ -17,3 +17,7 @@ Example of comparing nested files:
 
 Example of comparing nested files (with plain representation):
 [![asciicast](https://asciinema.org/a/YJAUKSU4bNmmLtlVNnJVPnuFG)](https://asciinema.org/a/YJAUKSU4bNmmLtlVNnJVPnuFG)
+
+
+Example of comparing nested files (with representation as JSON):
+[![asciicast](https://asciinema.org/a/obzPgZMV6EuIsQMoFxPyUDdvT)](https://asciinema.org/a/obzPgZMV6EuIsQMoFxPyUDdvT)
