@@ -1,5 +1,6 @@
 import makePlain from './plain.js';
 import makeStylish from './stylish.js';
+import makeJson from './json.js';
 
 const chooseFormatter = (format) => {
   switch (format) {
@@ -7,6 +8,8 @@ const chooseFormatter = (format) => {
       return makeStylish;
     case 'plain':
       return makePlain;
+    case 'json':
+      return makeJson;
     default:
       return console.log('Unknown type of format!');
   }
