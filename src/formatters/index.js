@@ -11,7 +11,7 @@ const chooseFormatter = (format) => {
     case 'json':
       return makeJson;
     default:
-      return console.log('Unknown type of format!');
+      throw new Error(`Unknown type of format - ${format}!`);
   }
 };
 

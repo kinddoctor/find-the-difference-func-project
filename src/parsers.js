@@ -8,7 +8,7 @@ const parseFile = (content, extension) => {
     case '.json':
       return JSON.parse(content);
     default:
-      return console.log('Error! Unknown file extension!');
+      throw new Error(`Unknown file extension - ${extension}!`);
   }
 };
 

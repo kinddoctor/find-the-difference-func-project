@@ -14,22 +14,22 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const getContent = (file) => readFileSync(getFixturePath(file), 'utf-8');
 
 const expectedDiff = diff;
+let file1;
+let file2;
 let expectedStylish;
 let expectedPlain;
 let expectedJson;
-let file1;
-let file2;
 let filepathYML1;
 let filepathYML2;
 let filepathJSON1;
 let filepathJSON2;
 
 beforeEach(() => {
+  file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
+  file2 = parseFile(getContent('file2.yml'), path.extname('file2.yml'));
   expectedPlain = getContent('expectedPlain.txt');
   expectedStylish = getContent('expectedStylish.txt');
   expectedJson = getContent('expectedJson.json');
-  file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
-  file2 = parseFile(getContent('file2.yml'), path.extname('file2.yml'));
   filepathYML1 = getFixturePath('file1.yml');
   filepathYML2 = getFixturePath('file2.yml');
   filepathJSON1 = getFixturePath('file1.json');
