@@ -15,6 +15,10 @@ Example of comparing nested files:
 [![asciicast](https://asciinema.org/a/Ee4dmJenGJlaYJt4nWItfaP1f)](https://asciinema.org/a/Ee4dmJenGJlaYJt4nWItfaP1f)
 
 
+Example of comparing nested files (with stylish representation):
+[![asciicast](https://asciinema.org/a/UHs9Tt7mWFLxmSLpe8oCAwzVy)](https://asciinema.org/a/UHs9Tt7mWFLxmSLpe8oCAwzVy)
+
+
 Example of comparing nested files (with plain representation):
 [![asciicast](https://asciinema.org/a/YJAUKSU4bNmmLtlVNnJVPnuFG)](https://asciinema.org/a/YJAUKSU4bNmmLtlVNnJVPnuFG)
 
