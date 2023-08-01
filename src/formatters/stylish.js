@@ -6,13 +6,14 @@ const makeStylish = (diffTree, spaceCount = 4) => {
     const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
     const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
 
-    const getValue = (curValue) => {
-      if (!isPlainObject(curValue)) {
-        return curValue;
+    const getValue = (currentValue) => {
+      if (!isPlainObject(currentValue)) {
+        return currentValue;
       }
-      const keys = Object.keys(curValue)
+      const obj = currentValue;
+      const keys = Object.keys(obj)
         .map((key) => {
-          const value = curValue[key];
+          const value = obj[key];
           return { key, value };
         });
       return iter(keys, depth + 1);

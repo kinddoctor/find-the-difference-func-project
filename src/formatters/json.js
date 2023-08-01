@@ -1,3 +1,3 @@
-const makeJson = (tree) => JSON.stringify(tree.children);
+const makeJson = (diffTree) => JSON.stringify(diffTree.children);
 
 export default makeJson;
