@@ -13,28 +13,16 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const getContent = (file) => readFileSync(getFixturePath(file), 'utf-8');
 
+const file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
+const file2 = parseFile(getContent('file2.yml'), path.extname('file2.yml'));
 const expectedDiff = diff;
-let file1;
-let file2;
-let expectedStylish;
-let expectedPlain;
-let expectedJson;
-let filepathYML1;
-let filepathYML2;
-let filepathJSON1;
-let filepathJSON2;
-
-beforeEach(() => {
-  file1 = parseFile(getContent('file1.yml'), path.extname('file1.yml'));
-  file2 = parseFile(getContent('file2.yml'), path.extname('file2.yml'));
-  expectedPlain = getContent('expectedPlain.txt');
-  expectedStylish = getContent('expectedStylish.txt');
-  expectedJson = getContent('expectedJson.json');
-  filepathYML1 = getFixturePath('file1.yml');
-  filepathYML2 = getFixturePath('file2.yml');
-  filepathJSON1 = getFixturePath('file1.json');
-  filepathJSON2 = getFixturePath('file2.json');
-});
+const filepathYML1 = getFixturePath('file1.yml');
+const filepathYML2 = getFixturePath('file2.yml');
+const filepathJSON1 = getFixturePath('file1.json');
+const filepathJSON2 = getFixturePath('file2.json');
+const expectedPlain = getContent('expectedPlain.txt');
+const expectedStylish = getContent('expectedStylish.txt');
+const expectedJson = getContent('expectedJson.json');
 
 test('diff', () => expect(makeTree(file1, file2)).toEqual(expectedDiff));
 
