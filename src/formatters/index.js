@@ -4,14 +4,13 @@ import makeJson from './json.js';
 
 const chooseFormatter = (format) => {
   switch (format) {
-    case 'stylish':
-      return makeStylish;
     case 'plain':
       return makePlain;
     case 'json':
       return makeJson;
+    case 'stylish':
     default:
-      throw new Error(`Unknown type of format - ${format}!`);
+      return makeStylish;
   }
 };
 
