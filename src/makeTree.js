@@ -1,9 +1,10 @@
 import union from 'lodash/union.js';
+import sortBy from 'lodash/sortBy.js';
 import isPlainObject from 'lodash/isPlainObject.js';
 
 const makeTree = (file1, file2) => {
   const inner = (obj1, obj2) => {
-    const keys = union(Object.keys(obj1), Object.keys(obj2)).toSorted();
+    const keys = sortBy(union(Object.keys(obj1), Object.keys(obj2)));
     const result = keys.reduce((acc, key) => {
       if (!Object.hasOwn(obj2, key)) {
         const newAcc = [...acc, { key, status: 'deleted', value: obj1[key] }];
