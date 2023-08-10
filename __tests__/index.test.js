@@ -26,8 +26,20 @@ const expectedJson = getContent('expectedJson.json');
 
 test('diff', () => expect(makeTree(file1, file2)).toEqual(expectedDiff));
 
-test('stylishDiff', () => expect(genDiff(filepathYML1, filepathYML2, 'stylish')).toEqual(expectedStylish));
+test('diff with default formatter', () => expect(genDiff(filepathYML1, filepathJSON2)).toEqual(expectedStylish));
 
-test('plainDiff', () => expect(genDiff(filepathJSON1, filepathJSON2, 'plain')).toEqual(expectedPlain));
-
-test('jsonDiff', () => expect(genDiff(filepathJSON1, filepathJSON2, 'json')).toEqual(expectedJson));
+test.each([
+  {
+    firstFile: filepathYML1, secondFile: filepathYML2, formatter: 'stylish', expected: expectedStylish,
+  },
+  {
+    firstFile: filepathJSON1, secondFile: filepathJSON2, formatter: 'plain', expected: expectedPlain,
+  },
+  {
+    firstFile: filepathJSON1, secondFile: filepathJSON2, formatter: 'json', expected: expectedJson,
+  },
+])('genDiff with ($formatter) formatter', ({
+  firstFile, secondFile, formatter, expected,
+}) => {
+  expect(genDiff(firstFile, secondFile, formatter)).toBe(expected);
+});
