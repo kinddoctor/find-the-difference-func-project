@@ -9,8 +9,9 @@ const chooseFormatter = (format) => {
     case 'json':
       return makeJson;
     case 'stylish':
-    default:
       return makeStylish;
+    default:
+      throw new Error(`Unknown type of format - ${format}!`);
   }
 };
 
