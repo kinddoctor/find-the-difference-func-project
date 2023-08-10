@@ -1,7 +1,7 @@
 import flattenDeep from 'lodash/flattenDeep.js';
 import isPlainObject from 'lodash/isPlainObject.js';
 
-const getValue = (value) => {
+const stringify = (value) => {
   if (isPlainObject(value)) {
     return '[complex value]';
   }
@@ -11,29 +11,29 @@ const getValue = (value) => {
   return value;
 };
 
+const findPath = (currentKey, pathBeforeKey) => ((pathBeforeKey === '') ? `${currentKey}` : `${pathBeforeKey}.${currentKey}`);
+
 const makePlain = (diffTree) => {
   const inner = (children, path) => {
     const result = children.filter(({ status }) => status !== 'unchanged')
       .map((child) => {
         const { key, status } = child;
-        const keypath = (path === '') ? `${key}` : `${path}.${key}`;
+        const keypath = findPath(key, path);
         switch (status) {
           case 'added': {
-            const value = getValue(child.value);
+            const value = stringify(child.value);
             return `Property '${keypath}' was added with value: ${value}`;
           }
           case 'deleted': {
             return `Property '${keypath}' was removed`;
           }
           case 'changed': {
-            const oldValue = getValue(child.oldValue);
-            const newValue = getValue(child.newValue);
+            const oldValue = stringify(child.oldValue);
+            const newValue = stringify(child.newValue);
             return `Property '${keypath}' was updated. From ${oldValue} to ${newValue}`;
           }
           case 'nested': {
-            const newChildren = child.children;
-            const newPath = keypath;
-            return inner(newChildren, newPath);
+            return inner(child.children, keypath);
           }
           default:
             throw new Error(`Unknown status: ${status} in ${key}!`);
