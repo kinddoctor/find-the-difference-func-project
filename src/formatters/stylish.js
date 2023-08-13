@@ -1,44 +1,51 @@
 import isPlainObject from 'lodash/isPlainObject.js';
 
-const makeStylish = (diffTree, spaceCount = 4) => {
+const makeIndent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - 2);
+const makeBracketIndent = (depth, spaceCount = 4) => ' '.repeat(depth * spaceCount - spaceCount);
+const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
+
+const stringify = (currentValue, depth) => {
+  if (!isPlainObject(currentValue)) {
+    return currentValue;
+  }
+  const newDepth = depth + 1;
+  const indent = makeIndent(newDepth);
+  const bracketIndent = makeBracketIndent(newDepth);
+  const obj = currentValue;
+  const keys = Object.keys(obj)
+    .map((key) => {
+      const value = stringify(obj[key], newDepth);
+      return `${indent}  ${key}: ${value}`;
+    });
+  return ['{',
+    ...keys,
+    `${bracketIndent}}`].join('\n');
+};
+
+const makeStylish = (diffTree) => {
   const iter = (children, depth) => {
-    const indent = ' '.repeat(depth * spaceCount - 2);
-    const bracketIndent = ' '.repeat(depth * spaceCount - spaceCount);
-    const specialSigns = { added: '+ ', deleted: '- ', unchanged: '  ' };
-
-    const getValue = (currentValue) => {
-      if (!isPlainObject(currentValue)) {
-        return currentValue;
-      }
-      const obj = currentValue;
-      const keys = Object.keys(obj)
-        .map((key) => {
-          const value = obj[key];
-          return { key, value };
-        });
-      return iter(keys, depth + 1);
-    };
-
+    const indent = makeIndent(depth);
+    const bracketIndent = makeBracketIndent(depth);
     const lines = children.map((child) => {
       const { key, status } = child;
       switch (status) {
         case 'added': {
-          return `${indent}${specialSigns.added}${key}: ${getValue(child.value)}`;
+          return `${indent}${specialSigns.added}${key}: ${stringify(child.value, depth)}`;
         }
         case 'deleted': {
-          return `${indent}${specialSigns.deleted}${key}: ${getValue(child.value)}`;
+          return `${indent}${specialSigns.deleted}${key}: ${stringify(child.value, depth)}`;
         }
         case 'unchanged': {
-          return `${indent}${specialSigns.unchanged}${key}: ${getValue(child.value)}`;
+          return `${indent}${specialSigns.unchanged}${key}: ${stringify(child.value, depth)}`;
         }
         case 'changed': {
-          return `${indent}${specialSigns.deleted}${key}: ${getValue(child.oldValue)}\n${indent}${specialSigns.added}${key}: ${getValue(child.newValue)}`;
+          return `${indent}${specialSigns.deleted}${key}: ${stringify(child.oldValue, depth)}\n${indent}${specialSigns.added}${key}: ${stringify(child.newValue, depth)}`;
         }
         case 'nested': {
           return `${indent}${specialSigns.unchanged}${key}: ${iter(child.children, depth + 1)}`;
         }
         default: {
-          return `${indent}${specialSigns.unchanged}${key}: ${getValue(child.value)}`;
+          throw new Error(`Unknown type of status - ${status}!`);
         }
       }
     });
