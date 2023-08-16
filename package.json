@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/kinddoctor/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/kinddoctor/frontend-project-46/actions)",
+  "description": "cli application that shows you the difference in data between two files. You can also choose the output`s format",
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
