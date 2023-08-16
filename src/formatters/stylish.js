@@ -11,14 +11,13 @@ const stringify = (currentValue, depth) => {
   const newDepth = depth + 1;
   const indent = makeIndent(newDepth);
   const bracketIndent = makeBracketIndent(newDepth);
-  const obj = currentValue;
-  const keys = Object.keys(obj)
+  const strings = Object.keys(currentValue)
     .map((key) => {
-      const value = stringify(obj[key], newDepth);
+      const value = stringify(currentValue[key], newDepth);
       return `${indent}  ${key}: ${value}`;
     });
   return ['{',
-    ...keys,
+    ...strings,
     `${bracketIndent}}`].join('\n');
 };
 
