@@ -3,6 +3,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d14bbbf7ccaf6a2f040c/maintainability)](https://codeclimate.com/github/kinddoctor/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d14bbbf7ccaf6a2f040c/test_coverage)](https://codeclimate.com/github/kinddoctor/frontend-project-46/test_coverage)
 
+## This is a CLI appllication, which can compute and visualize the difference between two files (applicable for .json, .yaml, .yml files)
+
 Example of comparing JSON files
 [![asciicast](https://asciinema.org/a/xoT7nNQFFScDKDsZkII2zPBdy.svg)](https://asciinema.org/a/xoT7nNQFFScDKDsZkII2zPBdy)
 
